@@ -1,5 +1,5 @@
 import React from 'react';
-import YarnCat from './YarnCat.svg';
+// import YarnCat from './YarnCat.svg';
 const YarnCatUrl = require("./YarnCat.svg") as string;
 import './App.css';
 
@@ -13,14 +13,9 @@ const App: React.FC = () => {
           <img src={YarnCatUrl} className="Yarn-cat" alt="Yarn Workspaces Cat" />
         </div>
         <h1>
-          <a
-            className="App-link"
-            href="https://github.com/react-workspaces/cra-workspaces-playground"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          
             <strong>React</strong> Workspaces <sup>(TypeScript)</sup>
-          </a>
+          
         </h1>
         <h2>Hot Reload Your React TypeScript Workspaces</h2>
         <p className="body">
