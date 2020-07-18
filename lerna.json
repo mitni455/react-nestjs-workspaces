@@ -1,6 +1,6 @@
 {
   "useWorkspaces": true,
-  "packages": ["packages/*/*"],
+  "packages": ["workspaces/*/*"],
   "version": "1.0.0",
   "command": {
     "run": {
