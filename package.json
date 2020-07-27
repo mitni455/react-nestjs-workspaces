@@ -4,7 +4,7 @@
   "scripts": {
     "start:app": "yarn workspace @masterclass-project/appname start",
     "start:api": "yarn workspace @masterclass-project/api start",
-    "start:story": "yarn workspace @masterclass-project/storybook storybook",
+    "start:story": "yarn workspace @masterclass-project/storybook story",
     "test": "FORCE_COLOR=true lerna run lint && CI=true FORCE_COLOR=true lerna run test -- --coverage",
     "deploy": "FORCE_COLOR=true lerna run deploy"
   },
