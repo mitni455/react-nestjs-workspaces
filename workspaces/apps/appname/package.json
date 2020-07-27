@@ -1,9 +1,10 @@
 {
-  "name": "@project/appname",
+  "name": "@masterclass-project/appname",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@project/components": "1.0.0",
+    "@masterclass-project/pages": "1.0.0",
+    "@masterclass-project/components": "1.0.0",
     "@react-workspaces/react-scripts": "^3.3.0-alpha-08",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",

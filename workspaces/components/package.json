@@ -1,5 +1,5 @@
 {
-  "name": "@project/components",
+  "name": "@masterclass-project/components",
   "version": "1.0.0",
   "main": "src/index.tsx",
   "main:src": "src/index.tsx",
@@ -8,6 +8,11 @@
     "lint": "eslint ./src/**/*.tsx --max-warnings=0 --format=codeframe"
   },
   "dependencies": {
+    "@masterclass-project/redux": "1.0.0",
+    "@masterclass-project/graphql": "1.0.0",
+    "@masterclass-project/services": "1.0.0",
+    "@masterclass-project/models": "1.0.0",
+    "@masterclass-project/config": "1.0.0",
     "@react-workspaces/react-scripts": "3.3.0-alpha-08",
     "@storybook/react": "^5.2.8",
     "@testing-library/jest-dom": "^4.2.4",

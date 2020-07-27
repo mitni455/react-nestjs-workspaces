@@ -1,13 +1,14 @@
 {
-  "name": "@project/storybook",
+  "name": "@masterclass-project/storybook",
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook"
+    "story": "start-storybook -p 9009",
+    "build": "build-storybook"
   },
   "dependencies": {
-    "@project/components": "1.0.0",
+    "@masterclass-project/pages": "1.0.0",
+    "@masterclass-project/components": "1.0.0",
     "@react-workspaces/react-scripts": "3.3.0-alpha-08",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"

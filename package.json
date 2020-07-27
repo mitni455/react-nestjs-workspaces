@@ -2,9 +2,9 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "start:app": "yarn workspace @project/appname start",
-    "start:api": "yarn workspace @project/api start",
-    "start:storybook": "yarn workspace @project/storybook storybook",
+    "start:app": "yarn workspace @masterclass-project/appname start",
+    "start:api": "yarn workspace @masterclass-project/api start",
+    "start:story": "yarn workspace @masterclass-project/storybook storybook",
     "test": "FORCE_COLOR=true lerna run lint && CI=true FORCE_COLOR=true lerna run test -- --coverage",
     "deploy": "FORCE_COLOR=true lerna run deploy"
   },
@@ -12,8 +12,15 @@
     "packages": [
       "workspaces/apis/*",
       "workspaces/apps/*",
+      "workspaces/pages",
       "workspaces/components",
-      "workspaces/storybook"
+      "workspaces/storybook",
+      "workspaces/redux",
+      "workspaces/graphql",
+      "workspaces/config",
+      "workspaces/models",
+      "workspaces/services",
+      "workspaces/*"
     ],
     "nohoist": [
       "workspaces/apps/**/webpack-dev-server",

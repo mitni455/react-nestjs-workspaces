@@ -1,0 +1,17 @@
+{
+    "name": "@masterclass-project/graphql",
+    "version": "1.0.0",
+    "description": "MasterClass {Project} GraphQL",
+    "main": "src/index.tsx",
+    "main:src": "src/index.tsx",
+    "scripts": {
+      "test": "jest"
+    },
+    "keywords": [
+      "react",
+      "typescript"
+    ],
+    "author": "nick@master-class.io",
+    "license": "ISC"
+  }
+  
