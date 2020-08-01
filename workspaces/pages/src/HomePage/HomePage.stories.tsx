@@ -7,7 +7,7 @@ import { withKnobs, text as txtAddOn, boolean, number, object as objectAddOn, ar
 /**
  * @components
  */
-import HomePage from './HomePage';
+import HomePage from './index';
 
 /**
  * Story Category
