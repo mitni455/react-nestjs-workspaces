@@ -1,5 +1,5 @@
 {
-  "name": "@masterclass-project/appname",
+  "name": "@masterclass-project/react",
   "version": "1.0.0",
   "private": true,
   "dependencies": {
@@ -18,9 +18,9 @@
     "typescript": "~3.7.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HOST=0.0.0.0 react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --no-watchman --all &",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/**/*.{ts,tsx} --max-warnings=0 --format=codeframe"
   },
