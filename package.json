@@ -2,7 +2,11 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "start:app": "yarn workspace @masterclass-project/appname start",
+    "build:react": "yarn workspace @masterclass-project/react build",
+    "build:api": "yarn workspace @masterclass-project/api build",
+    "test:react": "yarn workspace @masterclass-project/react test",
+    "test:api": "yarn workspace @masterclass-project/api test",
+    "start:react": "yarn workspace @masterclass-project/react start",
     "start:api": "yarn workspace @masterclass-project/api start",
     "start:story": "yarn workspace @masterclass-project/storybook storybook",
     "test": "FORCE_COLOR=true lerna run lint && CI=true FORCE_COLOR=true lerna run test -- --coverage",
@@ -12,15 +16,8 @@
     "packages": [
       "workspaces/apis/*",
       "workspaces/apps/*",
-      "workspaces/pages",
-      "workspaces/components",
-      "workspaces/storybook",
-      "workspaces/redux",
-      "workspaces/graphql",
-      "workspaces/config",
-      "workspaces/models",
-      "workspaces/services",
-      "workspaces/*"
+      "workspaces/modules/react/*",
+      "workspaces/modules/nestjs/*"
     ],
     "nohoist": [
       "workspaces/apps/**/webpack-dev-server",
