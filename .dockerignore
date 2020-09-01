@@ -1,0 +1,17 @@
+node_modules
+workspaces/apis/**/node_modules
+workspaces/apps/**/node_modules
+workspaces/modules/**/**/node_modules
+workspaces/modules/react/**/node_modules
+
+workspaces/apis/nestjs/node_modules
+workspaces/apps/react/node_modules
+workspaces/modules/react/components/node_modules
+workspaces/modules/react/config/node_modules
+workspaces/modules/react/graphql/node_modules
+workspaces/modules/react/models/node_modules
+workspaces/modules/react/pages/node_modules
+workspaces/modules/react/redux/node_modules
+workspaces/modules/react/services/node_modules
+workspaces/modules/react/storybook/node_modules
+

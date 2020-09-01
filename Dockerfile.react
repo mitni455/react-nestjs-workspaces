@@ -1,0 +1,158 @@
+#############################
+#
+# @namespace Build 
+# 
+FROM node:14-alpine as installer
+WORKDIR /usr/src/monorepo
+
+    #
+    # @desc just copy the packages for the install. This helps docker cache performance 
+    # @todo loop for wildcard lookups 
+    #
+    COPY package* ./
+    COPY workspaces/apps/react/package*                 ./workspaces/apps/react/
+    COPY workspaces/modules/react/pages/package*        ./workspaces/modules/react/pages/
+    COPY workspaces/modules/react/components/package*   ./workspaces/modules/react/components/
+    COPY workspaces/modules/react/config/package*       ./workspaces/modules/react/config/
+    COPY workspaces/modules/react/graphql/package*      ./workspaces/modules/react/graphql/
+    COPY workspaces/modules/react/models/package*       ./workspaces/modules/react/models/
+    COPY workspaces/modules/react/redux/package*        ./workspaces/modules/react/redux/
+    COPY workspaces/modules/react/services/package*     ./workspaces/modules/react/services/
+    COPY workspaces/modules/react/storybook/package*    ./workspaces/modules/react/storybook/
+
+    #
+    # @todo conditionally copy yarn.lock if it doesnt exist or this will fail 
+    # @see https://stackoverflow.com/a/56765978/457156
+    #
+    COPY ./yarn.lock ./yarn.lock
+
+
+    #
+    # @desc install 
+    #
+    RUN ["yarn", "install", "--prod"]
+
+    #
+    # @desc copy packages
+    # @todo wildcards 
+    #
+    COPY workspaces/apps/react/src/                 ./workspaces/apps/react/src/
+    COPY workspaces/modules/react/pages/            ./workspaces/modules/react/pages/
+    COPY workspaces/modules/react/components/       ./workspaces/modules/react/components/
+    COPY workspaces/modules/react/config/           ./workspaces/modules/react/config/
+    COPY workspaces/modules/react/graphql/          ./workspaces/modules/react/graphql/
+    COPY workspaces/modules/react/models/           ./workspaces/modules/react/models/
+    COPY workspaces/modules/react/redux/            ./workspaces/modules/react/redux/
+    COPY workspaces/modules/react/services/         ./workspaces/modules/react/services/
+    COPY workspaces/modules/react/storybook/        ./workspaces/modules/react/storybook/
+
+
+    #
+    # @desc copy all the other important configs ready for build 
+    #
+    COPY lerna.json ./
+    COPY ./.eslintignore ./.eslintignore
+    
+    COPY ./workspaces/apps/react/tsconfig.json ./workspaces/apps/react/tsconfig.json
+    COPY ./workspaces/apps/react/.eslintignore ./workspaces/apps/react/.eslintignore
+    COPY ./workspaces/apps/react/.eslintrc.js ./workspaces/apps/react/.eslintrc.js
+
+
+    #
+    # @desc copy the sources ready for build 
+    #
+    COPY ./workspaces/apps/react/src ./workspaces/apps/react/src
+    COPY ./workspaces/apps/react/public ./workspaces/apps/react/public
+
+
+
+
+#############################
+#
+# @namespace Build for Prod 
+# with Environment variables 
+# 
+FROM node:14-alpine as build4prod
+WORKDIR /usr/src/monorepo
+COPY --from=installer /usr/src/monorepo ./
+
+    # 
+    # @var webpack-prod turn on assert all to check all the variables 
+    #
+    ARG ASSERT_ALL=true 
+
+    # 
+    # @var client-playbook 
+    #
+    ARG NODE_ENV=production
+    ARG PORT=80
+    ARG HOST=0.0.0.0 
+
+    #
+    # @desc build
+    #
+    RUN ["yarn", "run", "build:react"]
+
+
+
+#############################
+#
+# @namespace Tests
+# 
+FROM node:14-alpine as tests
+WORKDIR /usr/src/monorepo
+COPY --from=installer /usr/src/monorepo/ .
+RUN ["yarn", "test:react"]
+
+
+
+
+
+#############################
+#
+# @namespace Run Dev Environment 
+# 
+FROM node:14-alpine as dev 
+WORKDIR /usr/src/monorepo
+COPY --from=installer /usr/src/monorepo ./
+
+    # 
+    # @var webpack-prod turn on assert all to check all the variables 
+    #
+    ARG ASSERT_ALL=true 
+
+    # 
+    # @var client-playbook 
+    #
+    ARG NODE_ENV=development
+    ARG PORT=80
+    ARG HOST=0.0.0.0 
+
+    #
+    # @const PORTS
+    #
+    EXPOSE 3000
+
+    #
+    # @desc on docker run
+    #   • ENTRYPOINT        - always executes  "yarn run"
+    #   • CMD               - is added to the entrypoint by default, if no other command is added by the user on docker run
+    #   • ENTRYPOINT + CMD  - "yarn run start:react"
+    #
+    ENTRYPOINT ["yarn", "run"]
+    CMD ["start:react"]
+
+
+#############################
+#
+# @namespace Run Prod Environment 
+# 
+FROM nginx:1.17.4 as prod
+
+COPY --from=build4prod /usr/src/monorepo/workspaces/apps/react/build/ /usr/share/nginx/html
+COPY ./deployment/nginx/default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ./deployment/nginx/nginx.conf /etc/nginx/nginx.conf
+
+ENV PORT 80
+
+CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
